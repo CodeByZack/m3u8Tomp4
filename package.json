@@ -1,5 +1,5 @@
 {
-  "name": "m3u8tomp4",
+  "name": "@zackdk/m3u8tomp4",
   "version": "1.0.0",
   "description": "a convenient tool merge m3u8 to mp4",
   "main": "dist/m3u8tomp4.js",
@@ -14,7 +14,11 @@
     "m3u8",
     "mp4"
   ],
-  "author": "zackdk",
+  "author": "zackdk", 
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeByZack/m3u8Tomp4"
+  },
   "license": "ISC",
   "dependencies": {
     "@ffmpeg/core": "^0.8.4",

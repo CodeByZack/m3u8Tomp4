@@ -31,7 +31,7 @@
 ### npm
 
 ```
-npm i m3u8tomp4
+npm i @zackdk/m3u8tomp4
 ```
 
 
