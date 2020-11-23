@@ -13,7 +13,7 @@ export const checkSourceType = (str) => {
     } else if (str.endsWith("ts")) {
         return "ts";
     } else if (str.endsWith("key")) {
-        return "ts";
+        return "key";
     } else {
         return "";
     }

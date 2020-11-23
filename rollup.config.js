@@ -10,7 +10,7 @@ export default {
   input: "src/index.js",
   output: [
     {
-      file: "dist/m3u8Tomp4.js",
+      file: "dist/m3u8tomp4.js",
       name: "m3u8Tomp4",
       format: "umd",
     //   plugins: [terser()]
