@@ -10,7 +10,7 @@ export default {
   output: [
     {
       file: "dist/m3u8tomp4.browser.mini.js",
-      name: "m3u8Tomp4",
+      name: "m3u8tomp4",
       format: "umd",
       plugins: [terser()]
     }

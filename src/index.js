@@ -33,9 +33,10 @@ const merge2mp4 = async (url)=>{
   await ffmpeg.run('-i', 'index.m3u8', '-c', 'copy' , 'output.mp4');
   const data = ffmpeg.FS('readFile', 'output.mp4');
 
-  //返回 一个mp4的 url
   return data;
 
 };
+
+export const setLogger =  logger.setLogger;
 
 export default merge2mp4;

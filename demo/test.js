@@ -1,4 +1,4 @@
-const merge2mp4 = require('./dist/m3u8Tomp4');
+const merge2mp4 = require('../dist/m3u8Tomp4').default;
 const fs = require('fs');
 
 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>在线合并m3u8</title>
+  </head>
+  <body>
+    <script src="../dist/m3u8tomp4.browser.mini.js"></script>
+    <video id="player" controls></video>
+
+    <div>
+      <input id="input" placeholder="在这输入m3u8链接" />
+      <button onclick="startDownload()">开始下载并转换为mp4</button>
+    </div>
+    <div id="logger"></div>
+
+    <script>
+      const logger = (text) => {
+        const loggerDiv = document.getElementById("logger");
+        loggerDiv.innerText = text;
+      };
+
+      m3u8tomp4.setLogger(logger);
+
+      const startDownload = () => {
+        const input = document.getElementById("input");
+        const value = input.value;
+        m3u8tomp4.default(value).then((res) => {
+
+          const url = URL.createObjectURL(new Blob([res.buffer], { type: 'video/mp4' }));
+          console.log(url);
+          const video = document.getElementById("player");
+          video.src = url;
+        });
+      };
+
+      (function () {
+        var src = "//cdn.jsdelivr.net/npm/eruda";
+        if (
+          !/eruda=true/.test(window.location) &&
+          localStorage.getItem("active-eruda") != "true"
+        )
+          return;
+        document.write("<scr" + 'ipt src="' + src + '"></scr' + "ipt>");
+        document.write("<scr" + "ipt>eruda.init();</scr" + "ipt>");
+      })();
+    </script>
+  </body>
+</html>

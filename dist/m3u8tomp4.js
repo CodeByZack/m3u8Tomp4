@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@ffmpeg/ffmpeg')) :
-    typeof define === 'function' && define.amd ? define(['@ffmpeg/ffmpeg'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.m3u8Tomp4 = factory(global.FFmpeg));
-}(this, (function (FFmpeg) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@ffmpeg/ffmpeg')) :
+    typeof define === 'function' && define.amd ? define(['exports', '@ffmpeg/ffmpeg'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.m3u8tomp4 = {}, global.FFmpeg));
+}(this, (function (exports, FFmpeg) { 'use strict';
 
     function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -131,6 +131,11 @@
 
     };
 
-    return merge2mp4;
+    const setLogger$1 =  logger$1.setLogger;
+
+    exports.default = merge2mp4;
+    exports.setLogger = setLogger$1;
+
+    Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
