@@ -1,11 +1,15 @@
 const noop = () => {};
-let logger = noop;
+
+let innerLogger = noop;
+
+
 const setLogger = (fn) => {
-  logger = fn || noop;
+  innerLogger = fn || noop;
 };
 
-export default {
+const Logger = {
   setLogger,
-  setLogging: (open) => (loggerOpen = open),
-  log: (msg) => logger(msg),
+  log: (msg) => innerLogger(msg),
 };
+
+export default Logger;

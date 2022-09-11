@@ -1,21 +1,33 @@
-import FFmpeg from '@ffmpeg/ffmpeg';
+import * as FFmpeg from '@ffmpeg/ffmpeg';
 import praseM3u8, { retryFetchFile } from './praseM3u8';
 import logger from './logger';
 import { requestPool } from './requestPool';
 
-logger.setLogger(console.log);
+// interface MergeOptions {
+//   /** 下载 TS 片段时，最大的并发请求数量，默认 6 */
+//   maxLimit?: number;
+//   /** 是否打印日志，默认 true */
+//   logOpen?: boolean;
+//   /** 如果下载ts片段，出现下载失败的情况，重新下载所有失败片段的次数，默认 3 */
+//   retryTimes?: number;
+// }
 
+logger.setLogger(console.log);
 const { createFFmpeg } = FFmpeg;
 
-const merge2mp4 = async (url, options = { maxLimit: 6, logOpen: true }) => {
-  const { maxLimit, logOpen } = options;
+const merge2mp4 = async (url, options) => {
+  const { maxLimit = 6, logOpen = true, retryTimes = 3 } = options || {};
   if (!logOpen) {
     logger.setLogger(undefined);
   }
   const ffmpeg = createFFmpeg();
   logger.log(`开始下载${url},并获取所有ts片段链接`);
   const praseObj = await praseM3u8(url);
-  const tsArr = praseObj.tsArr;
+  if (!praseObj) {
+    logger.log(`解析 m3u8 列表出错！`);
+    return null;
+  }
+  let tsArr = praseObj.tsArr;
 
   logger.log(`加载ffmpeg...`);
   await ffmpeg.load();
@@ -26,27 +38,50 @@ const merge2mp4 = async (url, options = { maxLimit: 6, logOpen: true }) => {
   });
 
   const downLoadResult = {
-    successCount: 0,
-    errorCount: 0,
-    totalCount: tsArr.length,
+    successItems: [],
+    errorItems: [],
+    totalItems: tsArr,
   };
 
-  await requestPool({
-    data: tsArr,
-    maxLimit,
-    iteratee: async ({ item }) => {
-      try {
-        ffmpeg.FS('writeFile', item.fileName, await retryFetchFile(item.path));
-        // const index = tsArr.indexOf(item);
-        downLoadResult.successCount++;
-        logger.log(
-          `正在下载ts片段: 成功${downLoadResult.successCount}段，失败${downLoadResult.errorCount}段，总共${downLoadResult.totalCount}段`,
-        );
-      } catch (error) {
-        downLoadResult.errorCount++;
-      }
-    },
-  });
+  for (let i = 0; i < retryTimes; i++) {
+    await requestPool({
+      data: tsArr,
+      maxLimit,
+      iteratee: async ({ item }) => {
+        try {
+          ffmpeg.FS(
+            'writeFile',
+            item.fileName,
+            await retryFetchFile(item.path),
+          );
+          // const index = tsArr.indexOf(item);
+          downLoadResult.successItems.push(item);
+          const successCount = downLoadResult.successItems.length;
+          const errorCount = downLoadResult.errorItems.length;
+          const totalCount = downLoadResult.totalItems.length;
+
+          logger.log(
+            `正在下载ts片段: 成功${successCount}段，失败${errorCount}段，总共${totalCount}段`,
+          );
+        } catch (error) {
+          logger.log(error);
+          downLoadResult.errorItems.push(item);
+        }
+      },
+    });
+
+    console.log(downLoadResult);
+
+    if (
+      downLoadResult.successItems.length === downLoadResult.totalItems.length
+    ) {
+      break;
+    } else {
+      tsArr = downLoadResult.errorItems;
+      downLoadResult.errorItems = [];
+    }
+  }
+
   // for (const ts of tsArr) {
   //   ffmpeg.FS('writeFile', ts.fileName, await retryFetchFile(ts.path));
   //   const index = tsArr.indexOf(ts);

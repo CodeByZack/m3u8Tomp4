@@ -1,4 +1,4 @@
-import FFmpeg from '@ffmpeg/ffmpeg';
+import * as FFmpeg from '@ffmpeg/ffmpeg';
 import {
   Uint8ArrayToString,
   StringToUint8Array,
@@ -32,6 +32,7 @@ const praseM3u8 = async (url) => {
   const res = await retryFetchFile(url);
   const data = Uint8ArrayToString(res);
   let copyMediaList = data;
+  // @ts-ignore
   const parser = new Parser();
   parser.push(data);
   parser.end();

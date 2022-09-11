@@ -1,10 +1,10 @@
 export const findMaxSubStr = (s1, s2) => {
-  var str = '',
+  let str = '',
     L1 = s1.length,
     L2 = s2.length;
 
   if (L1 > L2) {
-    var s3 = s1;
+    let s3 = s1;
     s1 = s2;
     s2 = s3;
     s3 = null;
@@ -33,23 +33,13 @@ export const Uint8ArrayToString = (fileData) => {
 };
 
 export const StringToUint8Array = (str) => {
-  var arr = [];
-  for (var i = 0, j = str.length; i < j; ++i) {
+  const arr = [];
+  for (let i = 0, j = str.length; i < j; ++i) {
     arr.push(str.charCodeAt(i));
   }
 
-  var tmpUint8Array = new Uint8Array(arr);
+  const tmpUint8Array = new Uint8Array(arr);
   return tmpUint8Array;
-};
-
-export const checkSourceType = (str) => {
-  if (str.endsWith('m3u8')) {
-    return 'm3u8';
-  } else if (str.endsWith('key')) {
-    return 'key';
-  } else {
-    return 'ts';
-  }
 };
 
 export const getFullUrl = (prefixUrl, path) => {

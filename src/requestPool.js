@@ -1,3 +1,13 @@
+// interface RequestPoolParams<T> {
+//   data: T[];
+//   maxLimit?: number;
+//   iteratee: (params: {
+//     index: number;
+//     item: T;
+//     data: T[];
+//   }) => any | Promise<any>;
+// }
+
 /**
  * promise并发限制调用
  * @param {object[]} data - 调用的数据列表
@@ -5,11 +15,11 @@
  * @param {function} iteratee - 处理单个节点的方法
  * @returns {promise}
  */
-export function requestPool({
+export const requestPool = ({
   data = [],
   maxLimit = 3,
   iteratee = () => {},
-} = {}) {
+}) => {
   const executing = [];
   const enqueue = (index = 0) => {
     // 边界处理
@@ -46,7 +56,7 @@ export function requestPool({
   };
 
   return enqueue();
-}
+};
 
 // 示例
 // promiseLimitPool({
