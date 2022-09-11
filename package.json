@@ -6,6 +6,7 @@
   "module": "src/index.js",
   "browser": "dist/m3u8tomp4.browser.mini.js",
   "scripts": {
+    "dev": "rollup -w -c rollup.config.browser.js & node serve.js",
     "build": "run-p build-node build-browser",
     "build-node": "rollup -c rollup.config.js",
     "build-browser": "rollup -c rollup.config.browser.js"
@@ -14,16 +15,17 @@
     "m3u8",
     "mp4"
   ],
-  "author": "zackdk", 
+  "author": "zackdk",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CodeByZack/m3u8Tomp4"
   },
   "license": "ISC",
   "dependencies": {
-    "@ffmpeg/core": "^0.8.4",
-    "@ffmpeg/ffmpeg": "^0.9.5",
-    "axios": "^0.21.0"
+    "@ffmpeg/core": "^0.11.0",
+    "@ffmpeg/ffmpeg": "^0.11.5",
+    "axios": "^0.21.0",
+    "m3u8-parser": "^4.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",
@@ -32,6 +34,7 @@
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
+    "express": "^4.18.1",
     "npm-run-all": "^4.1.5",
     "rollup": "^2.33.3",
     "rollup-plugin-terser": "^7.0.2"

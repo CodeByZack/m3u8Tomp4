@@ -13,7 +13,7 @@ export default {
       file: "dist/m3u8tomp4.js",
       name: "m3u8tomp4",
       format: "umd",
-    //   plugins: [terser()]
+      // plugins: [terser()]
     }
   ],
   plugins: [],
