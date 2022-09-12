@@ -26,7 +26,7 @@
 ### In Browser
 
 ```
-<script src="https://unpkg.com/@zackdk/m3u8tomp4@1.0.3/dist/m3u8tomp4.browser.mini.js"></script>
+<script src="https://unpkg.com/@zackdk/m3u8tomp4@1.0.4/dist/m3u8tomp4.browser.mini.js"></script>
 ```
 
 ### npm
