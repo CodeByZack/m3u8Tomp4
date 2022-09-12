@@ -45,7 +45,10 @@ export const StringToUint8Array = (str) => {
 export const getFullUrl = (prefixUrl, path) => {
   if (path.startsWith('http')) return path;
   const subStr = findMaxSubStr(prefixUrl, path);
-  return `${prefixUrl}${path.replace(subStr, '')}`;
+  if(subStr.startsWith(subStr) && prefixUrl.endsWith(subStr)){
+    return `${prefixUrl}${path.replace(subStr, '')}`;
+  }
+  return `${prefixUrl}${path}`;
 };
 
 export const getFileName = (urlPath) => {

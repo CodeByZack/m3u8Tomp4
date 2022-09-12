@@ -27,6 +27,8 @@ const merge2mp4 = async (url, options) => {
     logger.log(`解析 m3u8 列表出错！`);
     return null;
   }
+  console.log(praseObj);
+  debugger
   let tsArr = praseObj.tsArr;
 
   logger.log(`加载ffmpeg...`);
